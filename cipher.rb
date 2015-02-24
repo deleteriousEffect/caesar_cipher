@@ -1,26 +1,31 @@
-MINIMUM_CHAR_INT_VALUE = 65
-MAXIMUM_CHAR_INT_VALUE = 122
-NUM_LETTERS_IN_ALPHABET = 26
+def shift_char(char, shift)
+  uppercase_letters = ('A'..'Z').to_a
+  lowercase_letters = ('a'..'z').to_a
+  if char.match(/[a-z]/)
+    shifted_char_index = lowercase_letters.index(char) + shift
+
+    shifted_char = lowercase_letters[shifted_char_index]
+  elsif char.match(/[A-Z]/)
+    shifted_char_index = uppercase_letters.index(char) + shift
+
+    shifted_char = uppercase_letters[shifted_char_index]
+  end
+  shifted_char
+end
 
 def caesar_cipher(message, shift)
   characters = message.split(//)
   encoded_message = []
 
   characters.each do |char|
-    shifted_char = char.ord + shift
-    if shifted_char < MINIMUM_CHAR_INT_VALUE
-      shifted_char += NUM_LETTERS_IN_ALPHABET
-    end
+    shifted_char = shift_char(char, shift)
 
-    if shifted_char > MAXIMUM_CHAR_INT_VALUE
-      shifted_char -= NUM_LETTERS_IN_ALPHABET
-    end
-
-    encoded_message << shifted_char.chr
+    encoded_message << shifted_char
   end
   encoded_message.join
 end
 
 puts caesar_cipher('bat', 1)
-puts caesar_cipher('bat', -1)
-puts caesar_cipher('baz', 1)
+puts shift_char('a', 1)
+puts caesar_cipher('aaa', -1)
+puts caesar_cipher('What a string!', 5)
